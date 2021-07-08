@@ -54,12 +54,17 @@ public class Main {
     return "home";
   }
 
-  @RequestMapping("/login")
+  @GetMapping(path="/register")
+  String cheese(){
+    return "register";
+  }
+
+  @GetMapping(path="/login")
   String potato() {
     return "login";
   }
 
-  @GetMapping("/registeruser")
+  @GetMapping(path="/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
@@ -72,14 +77,14 @@ public class Main {
       }
       String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
       stmt.executeUpdate(sql);
-      return "login";
+      return "error";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
     }
   }
 
-  @GetMapping("/loginuser")
+  @GetMapping(path="/loginuser")
   public String userLogin(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
