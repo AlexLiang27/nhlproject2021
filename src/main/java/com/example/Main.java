@@ -63,7 +63,7 @@ public class Main {
         if (user.getUserName == rs.getUserName("username")) {
           // redirect back to register page with error message (username is already taken, please choose another username)
         }
-        if (user.getPassword)
+        if (user.getPassword) {}
       }
       String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
       stmt.executeUpdate(sql);
@@ -81,7 +81,7 @@ public class Main {
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUserName == rs.getUserName("username") && user.getPassword == rs.getPassword("password")) { // check if works later
-          return "redirect:/home"
+          return "redirect:/home";
         }
         else {
           // redirect back to login page with error message (username or password is incorrect)
