@@ -53,21 +53,40 @@ public class Main {
     return "home";
   }
 
-  @RequestMapping("/db")
-  String db(Map<String, Object> model) {
+  @GetMapping("/registeruser")
+  String db(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
-
-      ArrayList<String> output = new ArrayList<String>();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(15), password varchar(15))");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        output.add("Read from DB: " + rs.getTimestamp("tick"));
+        if (user.getUserName == rs.getUserName("username")) {
+          // redirect back to register page with error message (username is already taken, please choose another username)
+        }
+        if (user.getPassword)
       }
+      String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
+      stmt.executeUpdate(sql);
+      return "redirect:/login";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
 
-      model.put("records", output);
-      return "db";
+  @GetMapping("/loginuser")
+  String db(Map<String, Object> model, User user) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      while (rs.next()) {
+        if (user.getUserName == rs.getUserName("username") && user.getPassword == rs.getPassword("password")) { // check if works later
+          return "redirect:/home"
+        }
+        else {
+          // redirect back to login page with error message (username or password is incorrect)
+        }
+      }
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
