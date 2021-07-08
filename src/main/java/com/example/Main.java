@@ -50,7 +50,6 @@ public class Main {
 
   @RequestMapping("/")
   String index() {
-    Person person = new Person();
     return "home";
   }
 
