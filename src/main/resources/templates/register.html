@@ -18,27 +18,31 @@
             <form th:action="@{/registeruser}" action="/registeruser" th:object="${user}" method="post">
                 <div class="mb-2">
                     <label class="form-label">Username</label>
-                    <input type="text" th:field=*{username} id="username" placeholder="Enter Username" class="form-control">
+                    <input required="" type="text" th:field=*{username} id="username" placeholder="Enter Username" class="form-control">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Password</label>
-                    <input type="password"  th:field=*{password} id="password" placeholder="Enter Password" class="form-control">
+                    <input required="" type="password"  th:field=*{password} id="password" placeholder="Enter Password" class="form-control">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Enter your password again</label>
-                    <input type="password" id="password2" placeholder="Confirm Password" class="form-control">
+                    <input required="" type="password" id="password2" placeholder="Confirm Password" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <button type="submit" onclick="passwordValidate()" class="btn btn-primary">Submit</button>
+                    <input type="submit" onclick="return passwordValidate()" class="btn btn-primary"></button>
                     <p id="errormsg"></p>
                 </div>
                 <script>
                     function passwordValidate() {
-                        var pass1 = document.getElementById("password").innerText
-                        var pass2 = document.getElementById("password2").innerText
+                        var pass1 = document.getElementById("password").value;
+                        var pass2 = document.getElementById("password2").value;
+                        console.log(pass1);
+                        console.log(pass2);
                         if (pass1 != pass2) {
                             document.getElementById("errormsg").innerHTML = "Passwords do not match";
+                            return false;
                         }
+                        return true;
                     }
                 </script>
             </form>
