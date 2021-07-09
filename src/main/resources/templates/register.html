@@ -13,7 +13,7 @@
         <div class="ps-5 pe-5 mt-5 mb-5" style="width: 50%; margin: auto; border: 5px groove darkcyan">
             <div class="mx-auto" style="width: 300px;">
                 <h2 style="text-align: center;">Registration page</h2>
-                <p style="text-align: center;">Enter an username and password</p>
+                <p style="text-align: center;">Enter a username and password</p>
             </div>
             <form action="/registeruser" method="get">
                 <div class="mb-2">
@@ -25,7 +25,7 @@
                     <input type="password" id="password" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label for="password" class="form-label">Enter your password again</label>
+                    <label for="password2" class="form-label">Enter your password again</label>
                     <input type="password" id="password2" class="form-control">
                 </div>
                 <div class="mb-3">
@@ -34,8 +34,8 @@
                 </div>
                 <script>
                     function passwordValidate() {
-                        var pass1 = document.getElementById("password")
-                        var pass2 = document.getElementById("password2")
+                        var pass1 = document.getElementById("password").innerText
+                        var pass2 = document.getElementById("password2").innerText
                         if (pass1 != pass2) {
                             document.getElementById("errormsg").innerHTML = "Passwords do not match";
                         }
