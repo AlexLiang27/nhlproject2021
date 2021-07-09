@@ -77,15 +77,15 @@ public class Main {
       }
       String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
       stmt.executeUpdate(sql);
-      return "error";
+      return "redirect:/login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
     }
   }
 
-  @GetMapping(path="/loginuser")
-  public String userLogin(Map<String, Object> model, User user) {
+  @GetMapping("/loginuser")
+  String userLogin(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
@@ -95,7 +95,6 @@ public class Main {
         }
         else {
           // redirect back to login page with error message (username or password is incorrect)
-          return "error";
         }
       }
       return "error";
