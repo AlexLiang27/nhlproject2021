@@ -111,12 +111,6 @@ public class Main {
     }
   }
 
-  @GetMapping("/home")
-  String toHome(Map<String, Object> model) {
-    return "home";
-  }
-
-
   @GetMapping("/teams")
   String toTeam(Map<String, Object> model) {
     return "teams";
