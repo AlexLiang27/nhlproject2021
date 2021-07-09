@@ -50,7 +50,9 @@ public class Main {
   }
 
   @RequestMapping("/")
-  String index() {
+  String index(Map<String, Object> model) {
+    User user = new User();
+    model.put("user",user);
     return "login";
   }
 
@@ -78,13 +80,15 @@ public class Main {
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30))");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        if (user.getUsername() == rs.getString("username")) {
+        if (user.getUsername().equals(rs.getString("username"))) {
           // redirect back to register page with error message (username is already taken, please choose another username)
+          System.out.println("Duplicate name inputted!");
+          return "error";
         }
       }
       String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "')";
       stmt.executeUpdate(sql);
-      return "redirect:/login";
+      return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -97,14 +101,15 @@ public class Main {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        if (user.getUsername() == rs.getString("username") && user.getPassword() == rs.getString("password")) { // check if works later
+        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password"))) { // check if works later
           return "redirect:/home";
         }
         else {
           // redirect back to login page with error message (username or password is incorrect)
+          System.out.println("Account username and/or password does not exist!");
         }
       }
-      return "redirect:/home";
+      return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -114,7 +119,6 @@ public class Main {
   @GetMapping("/teams")
   String toTeam(Map<String, Object> model) {
     return "teams";
-
   }
 
 
