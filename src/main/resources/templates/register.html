@@ -15,18 +15,18 @@
                 <h2 style="text-align: center;">Registration page</h2>
                 <p style="text-align: center;">Enter a username and password</p>
             </div>
-            <form action="/registeruser" method="get">
+            <form th:action="@{/registeruser}" action="/registeruser" th:object="${user}" method="post">
                 <div class="mb-2">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label">Username</label>
+                    <input type="text" th:field=*{username} id="username" placeholder="Enter Username" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control">
+                    <label class="form-label">Password</label>
+                    <input type="password"  th:field=*{password} id="password" placeholder="Enter Password" class="form-control">
                 </div>
                 <div class="mb-2">
-                    <label for="password2" class="form-label">Enter your password again</label>
-                    <input type="password" id="password2" class="form-control">
+                    <label class="form-label">Enter your password again</label>
+                    <input type="password" id="password2" placeholder="Confirm Password" class="form-control">
                 </div>
                 <div class="mb-3">
                     <button type="submit" onclick="passwordValidate()" class="btn btn-primary">Submit</button>

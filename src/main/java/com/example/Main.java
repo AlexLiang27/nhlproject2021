@@ -51,31 +51,38 @@ public class Main {
 
   @RequestMapping("/")
   String index() {
-    return "register";
+    return "login";
   }
 
   @GetMapping("/register")
-  String cheese(){
+  String goRegister(Map<String, Object> model){
+    User user = new User();
+    model.put("user", user);
     return "register";
   }
 
   @GetMapping(path="/login")
-  String potato() {
+  String goLogin() {
     return "login";
   }
 
-  @GetMapping(path="/registeruser")
+  @GetMapping(path="/home")
+  String goHome() {
+    return "home";
+  }
+
+  @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(15), password varchar(15))");
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30))");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        if (user.getUserName() == rs.getString("username")) {
+        if (user.getUsername() == rs.getString("username")) {
           // redirect back to register page with error message (username is already taken, please choose another username)
         }
       }
-      String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
+      String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "')";
       stmt.executeUpdate(sql);
       return "redirect:/login";
     } catch (Exception e) {
@@ -84,20 +91,20 @@ public class Main {
     }
   }
 
-  @GetMapping("/loginuser")
+  @PostMapping("/loginuser")
   String userLogin(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        if (user.getUserName() == rs.getString("username") && user.getPassword() == rs.getString("password")) { // check if works later
+        if (user.getUsername() == rs.getString("username") && user.getPassword() == rs.getString("password")) { // check if works later
           return "redirect:/home";
         }
         else {
           // redirect back to login page with error message (username or password is incorrect)
         }
       }
-      return "error";
+      return "redirect:/home";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
