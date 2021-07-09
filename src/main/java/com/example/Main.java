@@ -111,7 +111,25 @@ public class Main {
     }
   }
 
-  @Bean
+  @GetMapping("/home")
+  String toHome(Map<String, Object> model) {
+    return "home";
+  }
+
+
+  @GetMapping("/teams")
+  String toTeam(Map<String, Object> model) {
+    return "teams";
+
+  }
+
+
+
+
+
+
+
+    @Bean
   public DataSource dataSource() throws SQLException {
     if (dbUrl == null || dbUrl.isEmpty()) {
       return new HikariDataSource();
@@ -122,4 +140,7 @@ public class Main {
     }
   }
 
+
+  
+  
 }
