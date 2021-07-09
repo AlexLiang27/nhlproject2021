@@ -54,8 +54,18 @@ public class Main {
     return "register";
   }
 
-  @GetMapping("/registeruser")
-  String userRegister(Map<String, Object> model, User user) {
+  @GetMapping("/register")
+  String cheese(){
+    return "register";
+  }
+
+  @GetMapping(path="/login")
+  String potato() {
+    return "login";
+  }
+
+  @GetMapping(path="/registeruser")
+  public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(15), password varchar(15))");
