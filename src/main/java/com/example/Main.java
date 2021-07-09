@@ -54,58 +54,6 @@ public class Main {
     return "register";
   }
 
-<<<<<<< HEAD
-  @GetMapping("/register")
-  String cheese(){
-    return "register";
-  }
-
-  @GetMapping(path="/login")
-  String potato() {
-    return "login";
-  }
-
-  @GetMapping(path="/registeruser")
-  public String userRegister(Map<String, Object> model, User user) {
-    try (Connection connection = dataSource.getConnection()) {
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(15), password varchar(15))");
-      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-      while (rs.next()) {
-        if (user.getUserName() == rs.getString("username")) {
-          // redirect back to register page with error message (username is already taken, please choose another username)
-        }
-      }
-      String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUserName() + "','" + user.getPassword() + "')";
-      stmt.executeUpdate(sql);
-      return "error";
-    } catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
-    }
-  }
-
-  @GetMapping(path="/loginuser")
-  public String userLogin(Map<String, Object> model, User user) {
-    try (Connection connection = dataSource.getConnection()) {
-      Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-      while (rs.next()) {
-        if (user.getUserName() == rs.getString("username") && user.getPassword() == rs.getString("password")) { // check if works later
-          return "redirect:/home";
-        }
-        else {
-          // redirect back to login page with error message (username or password is incorrect)
-          return "error";
-        }
-      }
-      return "error";
-    } catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
-    }
-  }
-=======
   // @GetMapping("/registeruser")
   // String userRegister(Map<String, Object> model, User user) {
   //   try (Connection connection = dataSource.getConnection()) {
@@ -144,7 +92,6 @@ public class Main {
   //     return "error";
   //   }
   // }
->>>>>>> 61a03f6a8284473bb106042cdd1940e7ba077fe2
 
   @Bean
   public DataSource dataSource() throws SQLException {
