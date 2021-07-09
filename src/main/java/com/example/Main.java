@@ -87,6 +87,7 @@ public class Main {
           // redirect back to login page with error message (username or password is incorrect)
         }
       }
+      return "error";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
