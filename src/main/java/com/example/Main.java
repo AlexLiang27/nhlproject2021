@@ -78,6 +78,11 @@ public class Main {
     return "home";
   }
 
+  @GetMapping(path="/registererror")
+  String goRegistererror() {
+    return "registererror";
+  }
+
   @GetMapping("/teams")
   String goTeams(Map<String, Object> model) {
     return "teams";
@@ -93,7 +98,7 @@ public class Main {
         if (user.getUsername().equals(rs.getString("username"))) {
           // redirect back to register page with error message (username is already taken, please choose another username)
           System.out.println("Duplicate name inputted!");
-          return "redirect:/register";
+          return "redirect:/registererror";
         }
       }
       String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
