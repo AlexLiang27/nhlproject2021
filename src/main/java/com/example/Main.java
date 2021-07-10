@@ -101,6 +101,7 @@ public class Main {
           return "login";
         }
       } 
+      return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
