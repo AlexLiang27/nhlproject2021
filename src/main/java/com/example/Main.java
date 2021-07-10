@@ -93,11 +93,13 @@ public class Main {
         if (user.getUsername().equals(rs.getString("username"))) {
           // redirect back to register page with error message (username is already taken, please choose another username)
           System.out.println("Duplicate name inputted!");
-          return "error";
+          return "redirect:/register";
+        }
+        else {
+          String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 1 + "')";
+          stmt.executeUpdate(sql);
         }
       }
-      String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
-      stmt.executeUpdate(sql);
       return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
