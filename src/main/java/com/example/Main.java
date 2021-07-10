@@ -95,12 +95,9 @@ public class Main {
           System.out.println("Duplicate name inputted!");
           return "redirect:/register";
         }
-        else {
-          String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
-          stmt.executeUpdate(sql);
-          return "login";
-        }
-      } 
+      }
+      String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
+      stmt.executeUpdate(sql);
       return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
