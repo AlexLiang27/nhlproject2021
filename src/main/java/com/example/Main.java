@@ -68,16 +68,26 @@ public class Main {
     return "login";
   }
 
+  @GetMapping(path="/adminhome")
+  String goAdminhome() {
+    return "adminhome";
+  }
+
   @GetMapping(path="/home")
   String goHome() {
     return "home";
+  }
+
+  @GetMapping("/teams")
+  String goTeams(Map<String, Object> model) {
+    return "teams";
   }
 
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30))");
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int)");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUsername().equals(rs.getString("username"))) {
@@ -86,7 +96,7 @@ public class Main {
           return "error";
         }
       }
-      String sql = "INSERT INTO users (username, password) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "')";
+      String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
       stmt.executeUpdate(sql);
       return "login";
     } catch (Exception e) {
@@ -101,8 +111,13 @@ public class Main {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password"))) { // check if works later
+        System.out.println(rs.getInt("status"));
+        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 0) { // check if works later
           return "redirect:/home";
+        }
+        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 1) { 
+          System.out.println("adminpage");
+          return "redirect:/adminhome";
         }
         else {
           // redirect back to login page with error message (username or password is incorrect)
@@ -115,16 +130,6 @@ public class Main {
       return "error";
     }
   }
-
-  @GetMapping("/teams")
-  String toTeam(Map<String, Object> model) {
-    return "teams";
-  }
-
-
-
-
-
 
 
     @Bean
