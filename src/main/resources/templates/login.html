@@ -15,6 +15,9 @@
                 <h2 style="text-align: center;">NHL Stat Tracker</h2>
                 <p style="text-align: center;">Enter your credentials below</p>
             </div>
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
             <form th:action="@{/loginuser}" action="/loginuser" th:object="${user}" method="post">
                 <div class="mb-2">
                     <label  class="form-label">Username</label>

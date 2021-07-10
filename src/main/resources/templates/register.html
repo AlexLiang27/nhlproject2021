@@ -36,10 +36,15 @@
                     function passwordValidate() {
                         var pass1 = document.getElementById("password").value;
                         var pass2 = document.getElementById("password2").value;
+                        var username = document.getElementById("username").value;
                         console.log(pass1);
                         console.log(pass2);
                         if (pass1 != pass2) {
                             document.getElementById("errormsg").innerHTML = "ERROR: Passwords do not match";
+                            return false;
+                        }
+                        if (pass1.length > 30 || username.length > 30) {
+                            document.getElementById("errormsg").innerHTML = "ERROR: Username and/or password is longer than 30 characters";
                             return false;
                         }
                         return true;

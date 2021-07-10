@@ -111,19 +111,16 @@ public class Main {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
-        System.out.println(rs.getInt("status"));
-        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 0) { // check if works later
+        if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 0) {
           return "redirect:/home";
         }
         if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 1) { 
           System.out.println("adminpage");
           return "redirect:/adminhome";
         }
-        else {
-          // redirect back to login page with error message (username or password is incorrect)
-          System.out.println("Account username and/or password does not exist!");
-        }
       }
+      // redirect back to login page with error message (username or password is incorrect)
+      System.out.println("Account username and/or password does not exist!");
       return "login";
     } catch (Exception e) {
       model.put("message", e.getMessage());
