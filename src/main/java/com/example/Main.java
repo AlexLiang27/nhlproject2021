@@ -78,6 +78,11 @@ public class Main {
     return "home";
   }
 
+  @GetMapping("/teaminfo")   
+  String goTeaminfo() {   
+      return "teaminfo"; 
+      }
+
   @GetMapping(path="/registererror")
   String goRegistererror() {
     return "registererror";
