@@ -37,7 +37,6 @@ import java.util.Map;
 // mr poopy butthole
 @Controller
 @SpringBootApplication
-@ComponentScan(basePackageClasses = ItemInventoryController.class)
 public class Main {
 
   @Value("${spring.datasource.url}")

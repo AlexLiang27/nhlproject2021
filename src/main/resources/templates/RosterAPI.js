@@ -25,15 +25,21 @@ $.when(
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/24/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/25/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/26/roster"),
-    $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/27/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/28/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/29/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/30/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/52/roster"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/53/roster"),
-    $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/54/roster"),
-    $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/55/roster")
-    ).done(function(NJD,NYI,NYR,PHI,PIT,BOS,BUF,MTL,OTT,TOR,CAR,FLA,TBL,WSH,CHI,DET,NSH,STL,CGY,COL,EDM,VAN,ANA,DAL,LAK,SJS,CBJ,MIN,WPG,ARI,VGK,SEA) {
+    $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/54/roster")
+    ).done(function(NJD,NYI,NYR,PHI,PIT,BOS,BUF,MTL,OTT,TOR,CAR,FLA,TBL,WSH,CHI,DET,NSH,STL,CGY,COL,EDM,VAN,ANA,DAL,LAK,SJS,CBJ,MIN,WPG,ARI,VGK) {
+    console.log(NJD);
+    
+    var fullname = NJD[0].roster[0].person.fullName;
+    var number = NJD[0].roster[0].jerseyNumber;
+    var position = NJD[0].roster[0].position.name;
 
+    $(".fullname").append(fullname);
+    $(".number").append(number);
+    $(".position").append(position);
 
 });
