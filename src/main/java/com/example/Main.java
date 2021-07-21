@@ -37,6 +37,7 @@ import java.util.Map;
 // mr poopy butthole
 @Controller
 @SpringBootApplication
+@ComponentScan(basePackageClasses = ItemInventoryController.class)
 public class Main {
 
   @Value("${spring.datasource.url}")
@@ -78,6 +79,16 @@ public class Main {
     return "home";
   }
 
+  @GetMapping("/teaminfo")
+  String goTeaminfo() {
+    return "teaminfo";
+  }
+
+  @GetMapping("/teamroster")
+  String goTeamroster() {
+    return "teamroster";
+  }
+
   @GetMapping(path="/registererror")
   String goRegistererror() {
     return "registererror";
@@ -87,6 +98,7 @@ public class Main {
   String goTeams(Map<String, Object> model) {
     return "teams";
   }
+
 
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
