@@ -3,6 +3,8 @@
 $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     console.log(data);
 
+
+    
     var teamname = data.teams[0].teamName;
     var location = data.teams[0].locationName;
     var division = data.teams[0].division.name;

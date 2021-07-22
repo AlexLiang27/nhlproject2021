@@ -34,7 +34,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
-// mr poopy butthole
+
 @Controller
 @SpringBootApplication
 public class Main {
@@ -80,6 +80,9 @@ public class Main {
 
   @GetMapping("/teaminfo")
   String goTeaminfo() {
+    const userAction = async() => {
+      const response = await fetch('https://statsapi.web.nhl.com/api/v1/teams.json')
+    }
     return "teaminfo";
   }
 
