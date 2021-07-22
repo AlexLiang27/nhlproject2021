@@ -80,9 +80,6 @@ public class Main {
 
   @GetMapping("/teaminfo")
   String goTeaminfo() {
-    const userAction = async() => {
-      const response = await fetch('https://statsapi.web.nhl.com/api/v1/teams.json')
-    }
     return "teaminfo";
   }
 
