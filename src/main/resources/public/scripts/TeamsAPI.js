@@ -1,6 +1,6 @@
 $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     console.log(data);
-    var regex = new RegExp(/[^?]*$/g);
+    var regex = new RegExp(/[^=]*$/g);
     var teamNumber = parseInt(regex.exec(window.location.href));
 
     $(".teamname").append(data.teams[teamNumber].teamName);
@@ -46,6 +46,8 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     map.set(6,"./LOGOS/buff.png");
 
     document.getElementById("teamImg").src = map.get(teamNumber);
-
+    document.getElementById("teamRoster").onclick = function() {
+        document.getElementById("teamRoster").href="/teamroster?id="+data.teams[teamNumber].id;
+    }
 
 });
