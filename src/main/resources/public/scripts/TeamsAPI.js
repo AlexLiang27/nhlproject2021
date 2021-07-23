@@ -1,19 +1,12 @@
-
-
 $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     console.log(data);
+    var regex = new RegExp(/[^?]*$/g);
+    var teamNumber = parseInt(regex.exec(window.location.href));
 
-    var teamname = data.teams[0].teamName;
-    var location = data.teams[0].locationName;
-    var division = data.teams[0].division.name;
-    var venue = data.teams[0].venue.name;
-    var abbre = data.teams[0].abbreviation;
-    var creation = data.teams[0].firstYearOfPlay;
-
-    $(".teamname").append(teamname);
-    $(".location").append(location);
-    $(".division").append(division);
-    $(".venue").append(venue);
-    $(".abbre").append(abbre);
-    $(".creation").append(creation);
+    $(".teamname").append(data.teams[teamNumber].teamName);
+    $(".location").append(data.teams[teamNumber].locationName);
+    $(".division").append(data.teams[teamNumber].division.name);
+    $(".venue").append(data.teams[teamNumber].venue.name);
+    $(".abbre").append(ata.teams[teamNumber].abbreviation);
+    $(".creation").append(data.teams[teamNumber].firstYearOfPlay);
 });
