@@ -15,6 +15,9 @@
  */
 
 package com.example;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 //PLEASE WORK
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -50,41 +53,70 @@ public class Main {
   }
 
   @RequestMapping("/")
-  String index(Map<String, Object> model) {
+  String index(Map<String, Object> model, HttpSession session) {
+    boolean temp = securityHome(session);
+    if (temp == true)
+      return "redirect:/home";
+
+
     User user = new User();
     model.put("user",user);
     return "login";
   }
 
   @GetMapping("/register")
-  String goRegister(Map<String, Object> model){
+  String goRegister(Map<String, Object> model, HttpServletRequest request){
+    boolean temp = security(request);
+    if (temp == true)
+      return "redirect:/home";
+
     User user = new User();
     model.put("user", user);
     return "register";
   }
 
   @GetMapping(path="/login")
-  String goLogin() {
+  String goLogin(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == true)
+      return "redirect:/home";
+
     return "login";
   }
 
   @GetMapping(path="/adminhome")
-  String goAdminhome() {
+  String goAdminhome(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/";
+
     return "adminhome";
   }
 
   @GetMapping(path="/home")
-  String goHome() {
+  String goHome(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/";
+
     return "home";
   }
 
   @GetMapping("/teaminfo")
-  String goTeaminfo() {
+  String goTeaminfo(@RequestParam String id,HttpServletRequest request) {
+    // boolean temp = security(request);
+    // if (temp == false)
+    //   return "redirect:/";
+ 
     return "teaminfo";
   }
 
   @GetMapping("/teamroster")
-  String goTeamroster() {
+  String goTeamroster(HttpServletRequest request) {
+    // boolean temp = security(request);
+    // if (temp == false)
+    //   return "redirect:/";
+
     return "teamroster";
   }
 
@@ -94,7 +126,11 @@ public class Main {
   }
 
   @GetMapping("/teams")
-  String goTeams(Map<String, Object> model) {
+  String goTeams(Map<String, Object> model, HttpServletRequest request) {
+    // boolean temp = security(request);
+    // if (temp == false)
+    //   return "redirect:/";
+
     return "teams";
   }
 
@@ -122,12 +158,21 @@ public class Main {
   }
 
   @PostMapping("/loginuser")
-  String userLogin(Map<String, Object> model, User user) {
+  String userLogin(Map<String, Object> model, User user, HttpServletRequest request) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 0) {
+          ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+          if (sessionID == null) {
+            sessionID = new ArrayList();
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
+          if (sessionID.isEmpty()) {
+            sessionID.add(rs.getInt("id"));
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
           return "redirect:/home";
         }
         if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 1) { 
@@ -145,18 +190,68 @@ public class Main {
   }
 
 
-    @Bean
-  public DataSource dataSource() throws SQLException {
-    if (dbUrl == null || dbUrl.isEmpty()) {
-      return new HikariDataSource();
-    } else {
-      HikariConfig config = new HikariConfig();
-      config.setJdbcUrl(dbUrl);
-      return new HikariDataSource(config);
+  //   @Bean
+  // public DataSource dataSource() throws SQLException {
+  //   if (dbUrl == null || dbUrl.isEmpty()) {
+  //     return new HikariDataSource();
+  //   } else {
+  //     HikariConfig config = new HikariConfig();
+  //     config.setJdbcUrl(dbUrl);
+  //     return new HikariDataSource(config);
+  //   }
+  // }
+
+  boolean security(HttpServletRequest request) {
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      System.out.println("returning false!");
+      return false;
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          System.out.println("returning true!");
+          return true;
+        } 
+      }
+      System.out.println("returning false2!");
+      return false;
+    } catch (Exception e) {
+      return false;
     }
   }
 
+  @PostMapping("/destroy")
+	public String destroySession(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/";
+	}
 
+  boolean securityHome(HttpSession request) {
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      System.out.println("returning false!");
+      return false;
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          System.out.println("returning true!");
+          return true;
+        } 
+      }
+      System.out.println("returning false2!");
+      return false;
+    } catch (Exception e) {
+      return false;
+    }
+  }
   
   
 }
