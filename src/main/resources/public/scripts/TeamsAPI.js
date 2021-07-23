@@ -7,6 +7,6 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     $(".location").append(data.teams[teamNumber].locationName);
     $(".division").append(data.teams[teamNumber].division.name);
     $(".venue").append(data.teams[teamNumber].venue.name);
-    $(".abbre").append(ata.teams[teamNumber].abbreviation);
+    $(".abbre").append(data.teams[teamNumber].abbreviation);
     $(".creation").append(data.teams[teamNumber].firstYearOfPlay);
 });
