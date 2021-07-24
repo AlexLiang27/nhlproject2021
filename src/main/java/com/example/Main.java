@@ -18,7 +18,6 @@ package com.example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-//PLEASE WORK
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
-// mr poopy butthole
 @Controller
 @SpringBootApplication
 public class Main {
@@ -51,18 +49,28 @@ public class Main {
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);
   }
-
+//true == logged in else kicked back
   @RequestMapping("/")
-  String index(Map<String, Object> model, HttpSession session) {
+  String infoPage(Map<String, Object> model, HttpSession session){
     boolean temp = securityHome(session);
-    if (temp == true)
+    if(temp==true){
       return "redirect:/home";
-
-
-    User user = new User();
-    model.put("user",user);
-    return "login";
+    }
+    return "info";
   }
+
+  // @GetMapping("/login")
+  // String index(Map<String, Object> model, HttpServletRequest request) {
+  //   boolean temp = security(request);
+  //   System.out.println("temp: "+temp);
+  //   if (temp == true)
+  //     return "redirect:/home";
+
+
+  //   User user = new User();
+  //   model.put("user",user);
+  //   return "redirect:/login";
+  // }
 
   @GetMapping("/register")
   String goRegister(Map<String, Object> model, HttpServletRequest request){
@@ -75,61 +83,63 @@ public class Main {
     return "register";
   }
 
-  @GetMapping(path="/login")
-  String goLogin(HttpServletRequest request) {
+  @RequestMapping("/login")
+  String goLogin(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == true)
       return "redirect:/home";
 
+    User user = new User();
+    model.put("user", user);
     return "login";
   }
 
-  @GetMapping(path="/adminhome")
+  @GetMapping("/adminhome")
   String goAdminhome(HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
-      return "redirect:/";
+      return "redirect:/login";
 
     return "adminhome";
   }
 
-  @GetMapping(path="/home")
+  @GetMapping("/home")
   String goHome(HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
-      return "redirect:/";
+      return "redirect:/login";
 
     return "home";
   }
 
   @GetMapping("/teaminfo")
   String goTeaminfo(@RequestParam String id,HttpServletRequest request) {
-    // boolean temp = security(request);
-    // if (temp == false)
-    //   return "redirect:/";
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
  
     return "teaminfo";
   }
 
   @GetMapping("/teamroster")
   String goTeamroster(HttpServletRequest request) {
-    // boolean temp = security(request);
-    // if (temp == false)
-    //   return "redirect:/";
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
 
     return "teamroster";
   }
 
-  @GetMapping(path="/registererror")
+  @GetMapping("/registererror")
   String goRegistererror() {
     return "registererror";
   }
 
   @GetMapping("/teams")
   String goTeams(Map<String, Object> model, HttpServletRequest request) {
-    // boolean temp = security(request);
-    // if (temp == false)
-    //   return "redirect:/";
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
 
     return "teams";
   }
@@ -224,10 +234,10 @@ public class Main {
     }
   }
 
-  @PostMapping("/destroy")
+  @GetMapping("/destroy")
 	public String destroySession(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
   boolean securityHome(HttpSession request) {
