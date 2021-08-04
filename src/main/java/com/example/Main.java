@@ -199,6 +199,15 @@ public class Main {
     }
   }
 
+  @GetMapping("/comparison")
+  String goComparison(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+
+    return "comparison";
+  }
+
 
   //   @Bean
   // public DataSource dataSource() throws SQLException {
