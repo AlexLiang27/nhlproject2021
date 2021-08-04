@@ -7,17 +7,19 @@ if (chBar) {
     data: {
     labels: ["assists", "goals", "pim", "shots", "games", "powerPlayGoals", "powerPlayPoints", "penaltyMinutes", "shotPct", "gameWinningGoals", "overTimeGoals", "shortHandedGoals", "shortHandedPoints", "plusMinus", "points"],
     datasets: [{
+        label:"player 1",
         data: [589, 445, 483, 503, 689, 692, 634, 123, 654, 789, 852, 963, 741, 159, 357],
         backgroundColor: colors[0]
     },
     {
+        label:"player 2",
         data: [639, 465, 493, 478, 589, 632, 674, 357, 159, 741, 963, 852, 789, 654, 123],
         backgroundColor: colors[1]
     }]
     },
     options: {
     legend: {
-        display: false
+        display: true
     },
     scales: {
         xAxes: [{
