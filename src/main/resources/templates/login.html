@@ -27,8 +27,13 @@
                     <label  class="form-label">Password</label>
                     <input required="" type="password" th:field=*{password} class="form-control">
                 </div>
-                <div class="mb-3">
+                <div class="mb-2">
                     <button type="submit" class="btn btn-primary">Submit</button> <a href="/register" style="margin: 5px;">Click here if you don't have an account already!</a>
+                </div>
+            </form>
+            <form class="d-flex" method="get" th:action="@{/}" action="/">
+                <div class="mb-2">
+                    <button type="submit" class="btn btn-primary" href="/">Back</button>
                 </div>
             </form>
         </div>
