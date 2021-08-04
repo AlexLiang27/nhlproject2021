@@ -33,9 +33,6 @@ $.when(
     $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/54/roster")
     ).done(function(NJD,NYI,NYR,PHI,PIT,BOS,BUF,MTL,OTT,TOR,CAR,FLA,TBL,WSH,CHI,DET,NSH,STL,CGY,COL,EDM,VAN,ANA,DAL,LAK,SJS,CBJ,MIN,WPG,ARI,VGK) {
     console.log(NJD);
-    
-    
-
 
     var fullname = NJD[0].roster[0].person.fullName;
     var number = NJD[0].roster[0].jerseyNumber;
