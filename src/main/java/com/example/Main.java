@@ -144,6 +144,14 @@ public class Main {
     return "teams";
   }
 
+  @GetMapping("/standings")
+  String goStandings(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+
+    return "standings";
+  }
 
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
