@@ -16,7 +16,7 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/"+teamNum+"/roster", functi
         }
         if(document.getElementById(("row"+count))!=null){
             if(k<data.roster.length){
-                document.getElementById("row"+count).innerHTML+="<div class='card'> <img id='player"+k+"' src='https://nhl.bamcontent.com/images/headshots/current/168x168/8477972.jpg' style='width: 37%; height: auto; ' class='card-img-top rounded mx-auto d-block'><div class='card-body'><h5 style='color: black'>Name:</h5><p class='fullname"+k+"' style='color:black;'></p><h5 style='color: black'>Jersey #:</h5><p class='number"+k+"' style='color:black;'></p><h5 style='color: black'>Position:</h5><p class='position"+k+"' style='color:black;'></p></div></div>";
+                document.getElementById("row"+count).innerHTML+="<div class='card'><a href='/playerstats?id="+data.roster[k].person.id+"' style='text-decoration: none;'> <img id='player"+k+"' src='https://nhl.bamcontent.com/images/headshots/current/168x168/8477972.jpg' style='width: 37%; height: auto; ' class='card-img-top rounded mx-auto d-block'><div class='card-body'><h5 style='color: black'>Name:</h5><p class='fullname"+k+"' style='color:black;'></p><h5 style='color: black'>Jersey #:</h5><p class='number"+k+"' style='color:black;'></p><h5 style='color: black'>Position:</h5><p class='position"+k+"' style='color:black;'></p></div></a></div>";
                 document.getElementsByClassName("fullname"+k)[0].innerHTML+=data.roster[k].person.fullName;
                 document.getElementsByClassName("number"+k)[0].innerHTML+=data.roster[k].jerseyNumber;
                 document.getElementsByClassName("position"+k)[0].innerHTML+=data.roster[k].position.name;
