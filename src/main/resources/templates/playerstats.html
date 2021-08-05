@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Information</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
+    <script src="/scripts/PlayerStats.js"></script>
+
+
+
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-info ps-5 pe-5">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">NHL Stats</a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+              <a class="nav-link" href="/home">Home</a>            
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/teams">Teams</a>             
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/standings">Standings</a>
+            </li>
+        </ul>
+      <form class="d-flex justify-content-end">
+        
+      </form> 
+  </div>
+</nav>
+
+<body class="bg-dark text-white">
+
+  
+  <div class="card rounded mx-auto" style="width: 27rem;">
+    <img id="playerImg" class="card-img-top  rounded mx-auto d-block" style="width: 13rem">
+    <div class="card-body ">
+        <h5 style="color: black">Full Name:</h5>
+        <p class="fullName" style="color: black" ></p>
+        <h5 style="color: black">Birthdate:</h5>
+        <p class="birthDate" style="color: black"></p>
+        <h5 style="color: black">Age:</h5>
+        <p class="currentAge" style="color: black"></p>
+        <h5 style="color: black">City:</h5>
+        <p class="birthCity" style="color: black"></p>
+        <h5 style="color: black">Nationality:</h5>
+        <p class="nationality" style="color: black"></p>
+        <h5 style="color: black">Height:</h5>
+        <p class="height" style="color: black"></p>
+        <h5 style="color: black">Weight:</h5>
+        <p class="weight" style="color: black"></p>
+        <h5 style="color: black">Shoot/Catch:</h5>
+        <p class="shootsCatches" style="color: black"></p>
+        <h5 style="color: black">Time on Ice Per Game:</h5>
+        <p class="timeOnIcePerGame" style="color: black"></p>
+        <h5 style="color: black">Assists:</h5>
+        <p class="assists" style="color: black"></p>
+        <h5 style="color: black">Goals:</h5>
+        <p class="goals" style="color: black"></p>
+        <h5 style="color: black">Shots:</h5>
+        <p class="shots" style="color: black"></p>
+        <h5 style="color: black">Games:</h5>
+        <p class="games" style="color: black"></p>
+        <h5 style="color: black">Hits:</h5>
+        <p class="hits" style="color: black"></p>
+        <h5 style="color: black">Face Off Percentage:</h5>
+        <p class="faceOffPct" style="color: black"></p>
+        <h5 style="color: black">Game Winning Goals:</h5>
+        <p class="gameWinningGoals" style="color: black"></p>
+        <h5 style="color: black">Blocked:</h5>
+        <p class="blocked" style="color: black"></p>
+        <h5 style="color: black">Plus Minus:</h5>
+        <p class="plusMinus" style="color: black"></p>
+        <h5 style="color: black">Points:</h5>
+        <p class="points" style="color: black"></p>
+        <a id="favouritePlayer" href="/ANDREW PUT YOUR URL STUFF HERE" class="btn btn-primary">Favourite This Player</a>
+        
+        <!-- 
+            fullname
+            birthdate
+            age
+            city
+            nationality
+            height
+            weight
+            shoot/catch
+            time on ice per game
+            assists
+            goals
+            shots
+            games
+            hits
+            faceOffPct
+            gameWinningGoals
+            blocked
+            plusMinus
+            points
+         -->
+
+    </div>
+  </div>
+
+
+  
+
+
+
+  
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

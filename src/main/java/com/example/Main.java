@@ -121,7 +121,14 @@ public class Main {
     return "teaminfo";
   }
 
-  
+  @GetMapping("/playerstats")
+  String goPlayerStats(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+
+    return "playerstats";
+  }
 
 
   @GetMapping("/seasonstats")
