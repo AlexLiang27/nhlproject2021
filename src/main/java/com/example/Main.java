@@ -157,12 +157,20 @@ public class Main {
     return "teams";
   }
 
+  @GetMapping("/standings")
+  String goStandings(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+
+    return "standings";
+  }
 
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int)");
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUsername().equals(rs.getString("username"))) {
@@ -171,7 +179,7 @@ public class Main {
           return "redirect:/registererror";
         }
       }
-      String sql = "INSERT INTO users (username, password, status) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "')";
+      String sql = "INSERT INTO users (username, password, status, favamount) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "','" + 0 + "','" + 0 + "')";
       stmt.executeUpdate(sql);
       return "login";
     } catch (Exception e) {
@@ -219,6 +227,38 @@ public class Main {
       return "redirect:/login";
 
     return "comparison";
+  }
+
+  @PostMapping("/getfavourites")
+  String getFavourites(Map<String, Object> model, HttpServletRequest request) {
+    //this mapping is NOT used rn. it will need to be modified but this gets the favourites and sends it in a model to Thymeleaf.
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      System.out.println("returning error!");
+      return "error";
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          //you're on the right resultSet now!
+          model.put("theID", rs.getArray("favids"));
+          return "redirect:/comparison";
+          //return true
+        } 
+      }
+      System.out.println("returning error2!");
+      return "error";
+    } catch (Exception e) {
+      return "error";
+    }
+
   }
 
 

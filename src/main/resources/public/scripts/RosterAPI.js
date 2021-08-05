@@ -33,4 +33,5 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/"+teamNum+"/roster", functi
             document.getElementById("player"+k).src="http://nhl.bamcontent.com/images/headshots/current/168x168/"+playerID[k]+".jpg";
         }
     }
+
 });
