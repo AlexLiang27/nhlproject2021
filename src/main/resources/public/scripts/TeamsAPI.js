@@ -48,6 +48,8 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     document.getElementById("teamImg").src = map.get(teamNumber);
     document.getElementById("teamRoster").onclick = function() {
         document.getElementById("teamRoster").href="/teamroster?id="+data.teams[teamNumber].id;
+    
     }
+
 
 });

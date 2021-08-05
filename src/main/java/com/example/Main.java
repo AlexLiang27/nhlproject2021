@@ -121,15 +121,17 @@ public class Main {
     return "teaminfo";
   }
 
+  
+
+
   @GetMapping("/seasonstats")
-  String goSeasonalstats(@RequestParam String id,HttpServletRequest request) {
+  String goSeasonStats(HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
- 
+
     return "seasonstats";
   }
-
 
 
   @GetMapping("/teamroster")
