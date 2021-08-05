@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awards</title>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+
+  <script src="/scripts/AwardsAPI.js"></script>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-info ps-5 pe-5">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">NHL Stats</a>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/teams">Teams</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/standings">Standings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/awards">Awards</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1 class="text-center"> NHL Awards </h1>
+
+<body class="bg-dark text-white">
+
+    <div class="card-group">
+      <div class="card">
+          <h3 class="award-title1" style="text-align: center; color: black;"></h3>
+        <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Stanley-Cup@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+        <div class="card-body">
+            <p style="color: black; font-weight: bold;">Award Legacy: </p>
+            <p class="history1" style="color: black;"></p>
+
+            <p style="color: black; font-weight: bold;">Description: </p>
+            <p class="description1" style="color: black;"></p>
+            
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title2" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Jack-Adams-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history2" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description2" style="color: black;"></p>
+          
+          
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title3" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Lady-Byng-Memorial-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history3" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description3" style="color: black;"></p>
+          
+        </div>
+      </div>
+    </div>
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title4" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Calder-Memorial-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history4" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description4" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title5" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/2019/06/willie-o-ree-trophy1240x1860-27125215.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+        
+          <p class="description5" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title6" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/King-Clancy-Memorial-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history6" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description6" style="color: black;"></p>
+        </div>
+      </div>
+    </div>
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title7" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Conn-Smythe-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history7" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description7" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title8" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Hart-Memorial-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history8" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description8" style="color: black;"></p>
+          
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title9" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/William-M-Jennings-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history9" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description9" style="color: black;"></p>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title10" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://cms.nhl.bamgrid.com/images/photos/287518596/1024x576/cut.jpg" width="57%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history10" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description10" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title11" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/James-Norris-Memorial-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history11" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description11" style="color: black;"></p>
+         
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title12" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Lester-Patrick-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history12" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description12" style="color: black;"></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title13" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Ted-Lindsay-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history13" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description13" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title14" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Presidents-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history14" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description14" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title15" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Maurice-Richard-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history15" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description15" style="color: black;"></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title16" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Art-Ross-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history16" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description16" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title17" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Frank-J-Selke-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history17" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description17" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title18" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Vezina-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history18" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description18" style="color: black;"></p>
+          
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title19" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Prince-of-Wales-Trophy@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history19" style="color: black;"></p>
+  
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description19" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title20" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Lifetime-Achievement-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history20" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description20" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title21" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Foundation-Player-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history21" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description21" style="color: black;"></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card-group">
+        <div class="card">
+            <h3 class="award-title22" style="text-align: center; color: black;"></h3>
+          <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/Mark-Messier-Leadership-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+          <div class="card-body">
+              <p style="color: black; font-weight: bold;">Award Legacy: </p>
+              <p class="history22" style="color: black;"></p>
+    
+              <p style="color: black; font-weight: bold;">Description: </p>
+              <p class="description22" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title23" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/General-Manager-of-the-Year-Award@2x.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+          <p style="color: black; font-weight: bold;">Award Legacy: </p>
+          <p class="history23" style="color: black;"></p>
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description23" style="color: black;"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="award-title24" style="text-align: center; color: black;"></h3>
+      <img class="images" src="https://records.nhl.com/site/asset/public/images/trophy/ej-mcguire-award-of-excellence.jpg" width="37%" height="auto" style="margin-right: auto; margin-left: auto; display: inline-block;">
+      <div class="card-body">
+
+
+          <p style="color: black; font-weight: bold;">Description: </p>
+          <p class="description24" style="color: black;"></p>
+        </div>
+      </div>
+    </div>
+
+  
+  
+
+  
+   
+  
+   
+
+ 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
