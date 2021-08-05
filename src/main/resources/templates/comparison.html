@@ -10,7 +10,7 @@
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-info ps-5 pe-5">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">NHL Stats</a>
+    <a class="navbar-brand" href="/home">NHL Stats</a>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
               <a class="nav-link" href="/home">Home</a>            
@@ -23,8 +23,7 @@
             </li>
         </ul>
       <form class="d-flex justify-content-end" method="get" th:action="@{/destroy}" action="/destroy">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-primary" type="submit">Search</button>
+        
         <a class="btn btn-danger ms-2" href="/destroy">Logout</a>
       </form> 
   </div>
