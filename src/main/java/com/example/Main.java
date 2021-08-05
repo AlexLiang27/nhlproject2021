@@ -141,6 +141,15 @@ public class Main {
     return "teamroster";
   }
 
+   @GetMapping("/awards")
+  String goAwards(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+
+    return "awards";
+  }
+
   @GetMapping("/registererror")
   String goRegistererror() {
     return "registererror";
