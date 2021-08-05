@@ -53,15 +53,5 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams/"+teamNumber+"/stats", func
     map.set(7,"./LOGOS/buff.png");
 
     document.getElementById("teamImg").src = map.get(teamNumber);
-    document.getElementById("teamRoster").onclick = function() {
-        document.getElementById("teamRoster").href="/teamroster?id="+data.teams[teamNumber].id;
-    
-    }
 
-    
-    document.getElementById("seasonStats").onclick = function() {
-        document.getElementById("seasonStats").href="/seasonstats?id="+data.teams[teamNumber].id;
-
-    }
-   
 });

@@ -51,5 +51,9 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     
     }
 
+    
+    document.getElementById("seasonStats").onclick = function() {
+        document.getElementById("seasonStats").href="/seasonstats?id="+data.teams[teamNumber].id;
 
+    }
 });
