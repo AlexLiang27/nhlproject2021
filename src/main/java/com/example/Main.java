@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -95,25 +96,134 @@ public class Main {
   }
 
   @GetMapping("/adminhome")
-  String goAdminhome(HttpServletRequest request) {
+  String goAdminhome(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
-
-    return "adminhome";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            model.put("user", rs.getString("username"));
+            //if you are NOT an admin, go here
+            return "home";
+          }
+        }
+      }
+      //if you are admin, go here
+      return "adminhome";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
 
   @GetMapping("/home")
-  String goHome(HttpServletRequest request) {
+  String goHome(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          model.put("user", rs.getString("username"));
+          if (rs.getInt("status") == 0) {
+            //if you are NOT an admin, go here
+            return "home";
+          }
+        }
+      }
+      return "adminhome";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
 
-    return "home";
+  @GetMapping("/favouritethisplayer")
+  String addFavouritePlayer(@RequestParam String id, HttpServletRequest request) {
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+ 
+    //code here
+    int idInt = Integer.parseInt(id);
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      //System.out.println("returning false!");
+      return "error";
+    }
+
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          //you're in the correct ID.
+          // System.out.println("returning true!");
+          //add the var idInt to become part of favids
+          int helper = rs.getInt("favamount");
+          //int[helper] = rs.getArray("favids");
+          // int[helper] = rs.getArray("favids");
+
+          stmt.executeUpdate("UPDATE users SET favids["+helper+"] = "+idInt+" WHERE id = "+temp+"");
+          stmt.executeUpdate("UPDATE users SET favamount = "+(helper+1)+" WHERE ID = "+temp+"");
+          
+          return "redirect:/teamroster";
+        } 
+      }
+      System.out.println("returning false2!");
+      return "error";
+    } catch (Exception e) {
+      return "error";
+    }
+  }
+
+  @GetMapping("/comparisonselect")
+  String goComparisonSelect(HttpServletRequest request, Model model) {
+    //security
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+
+    //code
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      //System.out.println("returning false!");
+      return "error";
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          Integer[] theArray = (Integer[])rs.getArray("favids").getArray();
+          model.addAttribute("favouritePlayers", theArray);
+          return "comparisonselect";
+        } 
+      }
+      System.out.println("returning false2!");
+      return "error";
+    } catch (Exception e) {
+      return "error";
+    }
+    //return "comparisonselect";
   }
 
   @GetMapping("/teaminfo")
-  String goTeaminfo(@RequestParam String id,HttpServletRequest request) {
+  String goTeaminfo(@RequestParam String id, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
@@ -164,6 +274,11 @@ public class Main {
     return "registererror";
   }
 
+  @GetMapping("/loginerror")
+  String goLoginerror() {
+    return "loginerror";
+  }
+
   @GetMapping("/teams")
   String goTeams(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
@@ -182,11 +297,101 @@ public class Main {
     return "standings";
   }
 
+  @GetMapping("/adminmanage")
+  String goAdminManage(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      ArrayList<User> output = new ArrayList<User>();
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            return "redirect:/home";
+          }
+        }
+        User a = new User();
+        a.setID(rs.getInt("id"));
+        a.setUsername(rs.getString("username"));
+        a.setPassword(rs.getString("password"));
+        a.setStatus(rs.getInt("status"));
+        output.add(a);
+      }
+      model.put("records",output);
+       return "adminmanage";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+  @GetMapping("/profile")
+  String goProfile(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+            model.put("user", rs.getString("username"));
+            return "profile";
+          }
+        }
+      return "profile";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
+
+  @GetMapping("/deleteaccount")
+  String adminDelete(Map<String, Object> model, HttpServletRequest request, @RequestParam String playerid){
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      stmt.executeUpdate("DELETE FROM users WHERE id="+playerid);
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      ArrayList<User> output = new ArrayList<User>();
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            return "redirect:/home";
+          }
+        }
+        User a = new User();
+        a.setID(rs.getInt("id"));
+        a.setUsername(rs.getString("username"));
+        a.setPassword(rs.getString("password"));
+        a.setStatus(rs.getInt("status"));
+        output.add(a);
+      }
+      model.put("records",output);
+       return "adminmanage";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
+      stmt.executeUpdate("");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUsername().equals(rs.getString("username"))) {
@@ -224,12 +429,21 @@ public class Main {
         }
         if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 1) { 
           System.out.println("adminpage");
+          ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+          if (sessionID == null) {
+            sessionID = new ArrayList();
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
+          if (sessionID.isEmpty()) {
+            sessionID.add(rs.getInt("id"));
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
           return "redirect:/adminhome";
         }
       }
       // redirect back to login page with error message (username or password is incorrect)
       System.out.println("Account username and/or password does not exist!");
-      return "login";
+      return "loginerror";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
