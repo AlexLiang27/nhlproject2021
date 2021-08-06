@@ -189,6 +189,46 @@ public class Main {
     }
   }
 
+  @GetMapping("/deletefavourites")
+  String deleteFavourites(HttpServletRequest request) {
+    System.out.println("you've entered deletefavourites");
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      System.out.println("special false 1!");
+      return "error";
+    }
+
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          System.out.println("I'm in the if statement!");
+          //you're in the correct ID.
+          // System.out.println("returning true!");
+          //add the var idInt to become part of favids
+          int helper = rs.getInt("favamount");
+          //int[helper] = rs.getArray("favids");
+          // int[helper] = rs.getArray("favids");
+          stmt.executeUpdate("UPDATE users SET favids = '{NULL}' WHERE ID = "+temp+"");
+          System.out.println("past the first execute update");
+          stmt.executeUpdate("UPDATE users SET favamount = "+0+" WHERE ID = "+temp+"");
+          return "redirect:/profile";
+        } 
+      }
+      System.out.println("special false 2!");
+      return "error";
+    } catch (Exception e) {
+      System.out.println("special false 3!");
+      return "error";
+    }
+  }
+
   @GetMapping("/comparisonselect")
   String goComparisonSelect(HttpServletRequest request, Model model) {
     //security
