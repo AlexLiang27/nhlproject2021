@@ -95,12 +95,27 @@ public class Main {
   }
 
   @GetMapping("/adminhome")
-  String goAdminhome(HttpServletRequest request) {
+  String goAdminhome(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
-
-    return "adminhome";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            return "redirect:/home";
+          }
+        }
+      }
+     return "adminhome";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
 
   @GetMapping("/home")
@@ -222,6 +237,30 @@ public class Main {
     return "standings";
   }
 
+   @GetMapping("/adminmanage")
+  String goAdminManage(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            return "redirect:/home";
+          }
+        }
+      }
+     return "adminmanage";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
@@ -264,6 +303,15 @@ public class Main {
         }
         if (user.getUsername().equals(rs.getString("username")) && user.getPassword().equals(rs.getString("password")) && rs.getInt("status") == 1) { 
           System.out.println("adminpage");
+          ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+          if (sessionID == null) {
+            sessionID = new ArrayList();
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
+          if (sessionID.isEmpty()) {
+            sessionID.add(rs.getInt("id"));
+            request.getSession().setAttribute("MY_SESSION_ID", sessionID);
+          }
           return "redirect:/adminhome";
         }
       }
