@@ -1,6 +1,7 @@
 var reg = new RegExp(/[^=]*$/g);
 var playerNum = parseInt(reg.exec(window.location.href));
 console.log("Player URL: "+playerNum);
+
 $.when(
     $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+playerNum+"/stats?stats=statsSingleSeason&season=20202021"),
     $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+playerNum)
@@ -27,4 +28,8 @@ $.when(
     $(".points").append(data2[0].stats[0].splits[0].stat.points);
 
     document.getElementById("playerImg").src = "http://nhl.bamcontent.com/images/headshots/current/168x168/"+playerNum+".jpg";
+
+    document.getElementById("favouritePlayer").onclick = function() {
+        document.getElementById("favouritePlayer").href="/favouritethisplayer?id="+playerNum;
+    }
 });
