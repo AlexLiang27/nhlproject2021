@@ -112,8 +112,48 @@ public class Main {
     return "home";
   }
 
+  @GetMapping("/favouritethisplayer")
+  String addFavouritePlayer(@RequestParam String id, HttpServletRequest request) {
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+ 
+    //code here
+    int idInt = Integer.parseInt(id);
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      //System.out.println("returning false!");
+      return "error";
+    }
+
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          //you're in the correct ID.
+          // System.out.println("returning true!");
+          //add the var idInt to become part of favids
+          int helper = rs.getInt("favamount");
+          // int[helper] = rs.getArray("favids");
+
+          stmt.executeUpdate("UPDATE users SET favids["+helper+"] = "+idInt+" WHERE id = "+temp+"");
+          stmt.executeUpdate("UPDATE users SET favamount = "+(helper+1)+" WHERE ID = "+temp+"");
+          
+          return "redirect:/teamroster";
+        } 
+      }
+      System.out.println("returning false2!");
+      return "error";
+    } catch (Exception e) {
+      return "error";
+    }
+  }
+
   @GetMapping("/teaminfo")
-  String goTeaminfo(@RequestParam String id,HttpServletRequest request) {
+  String goTeaminfo(@RequestParam String id, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
