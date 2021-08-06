@@ -46,7 +46,14 @@
     </select>
     
     <script>
-      //js here owo
+      var favPlayers = document.getElementsByClassName("temp");
+      console.log(favPlayers[0].innerHTML);
+      for(let k = 0;k<favPlayers.length;k++){
+        $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+favPlayers[k].innerHTML, function(data) {
+          console.log(favPlayers[k]);
+          favPlayers[k].innerHTML = data.people[0].fullName;
+        });
+      }
 
     </script>
 
