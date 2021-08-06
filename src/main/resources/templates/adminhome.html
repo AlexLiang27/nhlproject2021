@@ -12,7 +12,7 @@
     <a class="navbar-brand" href="#">NHL Stats</a>
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" href="/home">Home</a>
+        <a class="nav-link" href="/adminhome">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/teams">Teams</a>
@@ -25,7 +25,8 @@
       </li>
     </ul>
     <form class="d-flex justify-content-end" method="get" th:action="@{/destroy}" action="/destroy">
-      <a class="btn btn-primary" href="/adminmanage">Manage Users</a>
+      <a class="btn btn-primary ms-2" href="/profile">Profile</a>
+      <a class="btn btn-primary ms-2" href="/adminmanage">Manage Users</a>
       <a class="btn btn-danger ms-2" href="/destroy">Logout</a>
     </form> 
   </div>
