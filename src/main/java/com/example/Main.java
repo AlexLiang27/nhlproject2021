@@ -183,15 +183,29 @@ public class Main {
   }
 
    @GetMapping("/adminaccess")
-  String goAdminaccess(HttpServletRequest request) {
+  String goAdminaccess(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
-  // try (Connection connection = dataSource.getConnection()) {
-  //   Statement stmt  = connection.createStatement();
-  //     ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-  //     if ()
-  // }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      ArrayList<User> output = new ArrayList<User>();
+      while(rs.next()) {
+        User a = new User();
+        a.setID(rs.getInt("id"));
+        a.setUsername(rs.getString("username"));
+        a.setPassword(rs.getString("password"));
+        a.setStatus(rs.getInt("status"));
+        output.add(a);
+      }
+      model.put("records",output);
+    }
+    catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
     return "adminaccess";
   }
 
