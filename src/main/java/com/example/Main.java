@@ -108,11 +108,13 @@ public class Main {
       while (rs.next()) {
         if (IDCheck == rs.getInt("ID")) {
           if (rs.getInt("status") == 0) {
+            //if you are NOT an admin, go here
             return "redirect:/home";
           }
         }
       }
-     return "adminhome";
+      //if you are admin, go here
+      return "adminhome";
   } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
