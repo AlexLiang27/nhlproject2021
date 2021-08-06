@@ -12,6 +12,7 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
 
     //Nathan's harcode coding test
     var map = new Map();
+    var map2 = new Map();
 
     map.set(9,"./LOGOS/leafs.png");
     map.set(20,"./LOGOS/oilers.png");
@@ -44,6 +45,42 @@ $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
     map.set(3,"./LOGOS/fly.png");
     map.set(0,"./LOGOS/devils.png");
     map.set(6,"./LOGOS/buff.png");
+
+    map2.set(9,"https://www.nhl.com/mapleleafs");
+    map2.set(20,"https://www.nhl.com/oilers");
+    map2.set(28,"https://www.nhl.com/jets");
+    map2.set(7,"https://www.nhl.com/canadiens");
+    map2.set(18,"https://www.nhl.com/flames");
+    map2.set(8,"https://www.nhl.com/senators");
+    map2.set(21,"https://www.nhl.com/canucks");
+    map2.set(19,"https://www.nhl.com/avalanche");
+    map2.set(30,"https://www.nhl.com/goldenknights");
+    map2.set(27,"https://www.nhl.com/wild");
+    map2.set(17,"https://www.nhl.com/blues");
+    map2.set(29,"https://www.nhl.com/coyotes");
+    map2.set(24,"https://www.nhl.com/kings");
+    map2.set(25,"https://www.nhl.com/sharks");
+    map2.set(22,"https://www.nhl.com/ducks");
+    map2.set(10,"https://www.nhl.com/hurricanes");
+    map2.set(11,"https://www.nhl.com/panthers");
+    map2.set(12,"https://www.nhl.com/lightning");
+    map2.set(16,"https://www.nhl.com/predators");
+    map2.set(23,"https://www.nhl.com/stars");
+    map2.set(14,"https://www.nhl.com/blackhawks");
+    map2.set(15,"https://www.nhl.com/redwings");
+    map2.set(26,"https://www.nhl.com/bluejackets");
+    map2.set(4,"https://www.nhl.com/penguins");
+    map2.set(13,"https://www.nhl.com/capitals");
+    map2.set(5,"https://www.nhl.com/bruins");
+    map2.set(1,"https://www.nhl.com/islanders");
+    map2.set(2,"https://www.nhl.com/rangers");
+    map2.set(3,"https://www.nhl.com/flyers");
+    map2.set(0,"https://www.nhl.com/devils");
+    map2.set(6,"https://www.nhl.com/sabres");
+
+    document.getElementById("officialSite").href = map2.get(teamNumber);
+
+
 
     document.getElementById("teamImg").src = map.get(teamNumber);
     document.getElementById("teamRoster").onclick = function() {
