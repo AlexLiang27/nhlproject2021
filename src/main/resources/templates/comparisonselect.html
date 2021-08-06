@@ -41,21 +41,25 @@
         </ul> -->
     <!-- </div> -->
 
-    <select id="myID1" class="form-select" style="margin-top: 50px; width: 20%; margin-left: 25px">
+    <select id="myID1" class="form-select col text-center" style="margin-top: 50px; width: 20%; margin-left: 25px; text-align:center">
       <option class="temp" th:each="player : ${favouritePlayers}" th:text="${player}" th:value="${player}">
       </option>
     </select>
 
-    <select id="myID2" class="form-select" style="margin-top: 25px; width: 20%; margin-left: 25px">
+    <select id="myID2" class="form-select col text-center" style="margin-top: 50px; width: 20%; margin-left: 25px; text-align:center">
       <option class="temp" th:each="player : ${favouritePlayers}" th:text="${player}" th:value="${player}">
       </option>
     </select>
+
+
 
     <input onclick="showGraphs()" type="submit" id="narutouzumaki" class="btn btn-primary" value="compare these two!" style="margin-top: 25px; margin-left: 25px">
 
+   
     <div class="card-body">
       <canvas id="chBar"></canvas>
     </div>
+    
     
     
 
@@ -140,12 +144,18 @@
             },
             options: {
             legend: {
-                display: true
+                display: true,
+                labels: {
+                  fontColor: "white"
+                }
             },
             scales: {
                 xAxes: [{
                 barPercentage: 0.4,
-                categoryPercentage: 0.5
+                categoryPercentage: 0.5,
+                ticks: {
+                  fontColor: "white"
+                }
                 }]
             }
             }
