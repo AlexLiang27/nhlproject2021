@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <title>Comparison Selection Screen</title>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
@@ -51,17 +52,106 @@
     </select>
 
     <input type="submit" id="narutouzumaki" class="btn btn-primary" value="compare these two!" style="margin-top: 25px; margin-left: 25px">
-   
+
+    <div class="card-body">
+      <canvas id="chBar"></canvas>
+    </div>
     
     <script>
       var favPlayers = document.getElementsByClassName("temp");
       console.log(favPlayers[0].innerHTML);
+      var player1data = [];
+      var player2data = [];
+      var name1;
+      var name2;
       for(let k = 0;k<favPlayers.length;k++){
         $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+favPlayers[k].innerHTML, function(data) {
           console.log(favPlayers[k]);
           favPlayers[k].innerHTML = data.people[0].fullName;
         });
       }
+
+      $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+(document.getElementById("myID1")).value, function(data) {
+        name1 = data.people[0].fullName;
+        console.log(name1);
+      });
+      console.log(name1);
+      $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+(document.getElementById("myID2")).value, function(data) {
+        name2 = data.people[0].fullName;
+      });
+      
+      $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+(document.getElementById("myID1")).value+"/stats?stats=statsSingleSeason&season=20202021", function(data) {
+        let stat1 = data.stats[0].splits[0].stat;
+        player1data.push(stat1.assists);
+        player1data.push(stat1.goals);
+        player1data.push(stat1.pim);
+        player1data.push(stat1.shots);
+        player1data.push(stat1.games);
+        player1data.push(stat1.powerPlayGoals);
+        player1data.push(stat1.powerPlayPoints);
+        player1data.push(stat1.penaltyMinutes);
+        player1data.push(stat1.shotPct);
+        player1data.push(stat1.gameWinningGoals);
+        player1data.push(stat1.overTimeGoals);
+        player1data.push(stat1.shortHandedGoals);
+        player1data.push(stat1.shortHandedPoints);
+        player1data.push(stat1.plusMinus);
+        player1data.push(stat1.points);
+      });
+
+      $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+(document.getElementById("myID2")).value+"/stats?stats=statsSingleSeason&season=20202021", function(data) {
+        let stat2 = data.stats[0].splits[0].stat;
+        player2data.push(stat2.assists);
+        player2data.push(stat2.goals);
+        player2data.push(stat2.pim);
+        player2data.push(stat2.shots);
+        player2data.push(stat2.games);
+        player2data.push(stat2.powerPlayGoals);
+        player2data.push(stat2.powerPlayPoints);
+        player2data.push(stat2.penaltyMinutes);
+        player2data.push(stat2.shotPct);
+        player2data.push(stat2.gameWinningGoals);
+        player2data.push(stat2.overTimeGoals);
+        player2data.push(stat2.shortHandedGoals);
+        player2data.push(stat2.shortHandedPoints);
+        player2data.push(stat2.plusMinus);
+        player2data.push(stat2.points);
+      });
+
+      var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
+      var chBar = document.getElementById("chBar");
+      $.getJSON("https://statsapi.web.nhl.com/api/v1/teams", function(data) {
+        if (chBar) {
+          new Chart(chBar, {
+          type: 'bar',
+          data: {
+          labels: ["assists", "goals", "pim", "shots", "games", "powerPlayGoals", "powerPlayPoints", "penaltyMinutes", "shotPct", "gameWinningGoals", "overTimeGoals", "shortHandedGoals", "shortHandedPoints", "plusMinus", "points"],
+          datasets: [{
+              label: name1,
+              data: player1data,
+              backgroundColor: colors[0]
+          },
+          {
+              label: name2,
+              data: player2data,
+              backgroundColor: colors[1]
+          }]
+          },
+          options: {
+          legend: {
+              display: true
+          },
+          scales: {
+              xAxes: [{
+              barPercentage: 0.4,
+              categoryPercentage: 0.5
+              }]
+          }
+          }
+          });
+      }
+      });
+      
 
     </script>
 
