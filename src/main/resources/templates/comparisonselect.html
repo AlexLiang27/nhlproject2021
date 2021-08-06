@@ -40,10 +40,18 @@
         </ul> -->
     <!-- </div> -->
 
-    <select>
-      <option class="temp" th:each="player : ${favouritePlayers}" th:text="${player}">
+    <select id="myID1" class="form-select" style="margin-top: 50px; width: 20%; margin-left: 25px">
+      <option class="temp" th:each="player : ${favouritePlayers}" th:text="${player}" th:value="${player}">
       </option>
     </select>
+
+    <select id="myID2" class="form-select" style="margin-top: 25px; width: 20%; margin-left: 25px">
+      <option class="temp" th:each="player : ${favouritePlayers}" th:text="${player}" th:value="${player}">
+      </option>
+    </select>
+
+    <input type="submit" id="narutouzumaki" class="btn btn-primary" value="compare these two!" style="margin-top: 25px; margin-left: 25px">
+   
     
     <script>
       var favPlayers = document.getElementsByClassName("temp");
