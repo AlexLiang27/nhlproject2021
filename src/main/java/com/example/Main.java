@@ -242,7 +242,7 @@ public class Main {
     return "standings";
   }
 
-   @GetMapping("/adminmanage")
+  @GetMapping("/adminmanage")
   String goAdminManage(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
@@ -264,6 +264,15 @@ public class Main {
       model.put("message", e.getMessage());
       return "error";
     }
+  }
+
+  @GetMapping("/profile")
+  String goProfile(Map<String, Object> model, HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    
+    return "profile";
   }
 
   @PostMapping("/registeruser")
