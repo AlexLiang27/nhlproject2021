@@ -331,7 +331,7 @@ public class Main {
   }
 
   @GetMapping("/profile")
-  String goProfile(Map<String, Object> model, HttpServletRequest request) {
+  String goProfile(Model model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
@@ -342,13 +342,15 @@ public class Main {
       int IDCheck = sessionID.get(0);
       while (rs.next()) {
         if (IDCheck == rs.getInt("ID")) {
-            model.put("user", rs.getString("username"));
+            model.addAttribute("user", rs.getString("username"));
+            Integer[] theArray = (Integer[])rs.getArray("favids").getArray();
+            model.addAttribute("favouritePlayers", theArray);
             return "profile";
           }
         }
       return "profile";
   } catch (Exception e) {
-      model.put("message", e.getMessage());
+      model.addAttribute("message", e.getMessage());
       return "error";
     }
   }

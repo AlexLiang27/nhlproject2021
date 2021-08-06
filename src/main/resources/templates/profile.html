@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-info ps-5 pe-5">
   <div class="container-fluid">
@@ -31,9 +33,46 @@
     <div class="container">
         <h1 th:inline="text" style="text-align: center;" th:text="'Welcome, ' + ${user} + '!'"></h1>
         <h1 style="text-align: center;" >Here you can compare your favourited players stats!</h1>
+
+        <h2 style="text-align: center;" class="pt-25">These are your favourites:</h2>
+
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="player : ${favouritePlayers}">
+              <td class="id" th:text="${player}"></td>
+              <td class="first" th:text="${player}"></td>
+              <td class="last" th:text="${player}"></td>
+            </tr>
+          </tbody>
+        </table>
+
+
         <div class="col text-center"><a class="btn btn-primary ms-2" style="text-align: center;" href="/comparisonselect">Compare Players</a></div>
   
     </div>
+    <script>
+      var favPlayersFirst = document.getElementsByClassName("first");
+      var favPlayersLast = document.getElementsByClassName("last");
+      console.log(favPlayersFirst[0].innerHTML);
+
+      for(let k = 0;k<favPlayersFirst.length;k++){
+        $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+favPlayersFirst[k].innerHTML, function(data) {
+          console.log(favPlayersFirst[k]);
+          favPlayersFirst[k].innerHTML = data.people[0].firstName;
+        });
+        $.getJSON("https://statsapi.web.nhl.com/api/v1/people/"+favPlayersLast[k].innerHTML, function(data) {
+          console.log(favPlayersLast[k]);
+          favPlayersLast[k].innerHTML = data.people[0].lastName;
+        });
+      }
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
