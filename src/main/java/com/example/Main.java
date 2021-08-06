@@ -179,6 +179,11 @@ public class Main {
     return "registererror";
   }
 
+  @GetMapping("/loginerror")
+  String goLoginerror() {
+    return "loginerror";
+  }
+
   @GetMapping("/teams")
   String goTeams(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
@@ -225,7 +230,7 @@ public class Main {
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
+      stmt.executeUpdate("");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       while (rs.next()) {
         if (user.getUsername().equals(rs.getString("username"))) {
@@ -277,7 +282,7 @@ public class Main {
       }
       // redirect back to login page with error message (username or password is incorrect)
       System.out.println("Account username and/or password does not exist!");
-      return "login";
+      return "loginerror";
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
