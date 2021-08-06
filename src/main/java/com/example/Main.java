@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -152,6 +153,7 @@ public class Main {
           // System.out.println("returning true!");
           //add the var idInt to become part of favids
           int helper = rs.getInt("favamount");
+          //int[helper] = rs.getArray("favids");
           // int[helper] = rs.getArray("favids");
 
           stmt.executeUpdate("UPDATE users SET favids["+helper+"] = "+idInt+" WHERE id = "+temp+"");
@@ -165,6 +167,39 @@ public class Main {
     } catch (Exception e) {
       return "error";
     }
+  }
+
+  @GetMapping("/comparisonselect")
+  String goComparisonSelect(HttpServletRequest request, Model model) {
+    //security
+    boolean sec = security(request);
+    if (sec == false)
+      return "redirect:/login";
+
+    //code
+
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    if (sessionID == null) {
+      //System.out.println("returning false!");
+      return "error";
+    }
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int temp = sessionID.get(0);
+      while (rs.next()) {
+        if (temp == rs.getInt("ID")) {
+          Integer[] theArray = (Integer[])rs.getArray("favids").getArray();
+          model.addAttribute("favouritePlayers", theArray);
+          return "comparisonselect";
+        } 
+      }
+      System.out.println("returning false2!");
+      return "error";
+    } catch (Exception e) {
+      return "error";
+    }
+    //return "comparisonselect";
   }
 
   @GetMapping("/teaminfo")
