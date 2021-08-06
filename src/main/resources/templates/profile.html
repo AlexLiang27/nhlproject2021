@@ -29,7 +29,9 @@
 
 <body class="bg-dark text-white">
     <div class="container">
-        <h1 style="text-align: center;" th:inline="text" >Welcome, here you can view your favourited players <h1 th:inline="text" style="text-align: center;" th:text="${user}"></h1> </h1>
+        <h1 th:inline="text" style="text-align: center;" th:text="'Welcome, ' + ${user} + '!'"></h1>
+        <h1 style="text-align: center;" >Here you can compare your favourited players stats!</h1>
+        <div class="col text-center"><a class="btn btn-primary ms-2" style="text-align: center;" href="/comparisonselect">Compare Players</a></div>
   
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

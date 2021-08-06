@@ -179,7 +179,7 @@ public class Main {
           stmt.executeUpdate("UPDATE users SET favids["+helper+"] = "+idInt+" WHERE id = "+temp+"");
           stmt.executeUpdate("UPDATE users SET favamount = "+(helper+1)+" WHERE ID = "+temp+"");
           
-          return "redirect:/teamroster";
+          return "redirect:/profile";
         } 
       }
       System.out.println("returning false2!");
