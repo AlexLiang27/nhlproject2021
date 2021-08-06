@@ -287,16 +287,25 @@ public class Main {
     ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt  = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (id serial, username varchar(30), password varchar(30), status int, favids integer[], favamount int)");
       ResultSet rs = stmt.executeQuery("SELECT * FROM users");
       int IDCheck = sessionID.get(0);
+      ArrayList<User> output = new ArrayList<User>();
       while (rs.next()) {
         if (IDCheck == rs.getInt("ID")) {
           if (rs.getInt("status") == 0) {
             return "redirect:/home";
           }
         }
+        User a = new User();
+        a.setID(rs.getInt("id"));
+        a.setUsername(rs.getString("username"));
+        a.setPassword(rs.getString("password"));
+        a.setStatus(rs.getInt("status"));
+        output.add(a);
       }
-     return "adminmanage";
+      model.put("records",output);
+       return "adminmanage";
   } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -310,6 +319,40 @@ public class Main {
       return "redirect:/login";
     
     return "profile";
+  }
+
+
+  @GetMapping("/deleteaccount")
+  String adminDelete(Map<String, Object> model, HttpServletRequest request, @RequestParam String playerid){
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      stmt.executeUpdate("DELETE FROM users WHERE id="+playerid);
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      ArrayList<User> output = new ArrayList<User>();
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          if (rs.getInt("status") == 0) {
+            return "redirect:/home";
+          }
+        }
+        User a = new User();
+        a.setID(rs.getInt("id"));
+        a.setUsername(rs.getString("username"));
+        a.setPassword(rs.getString("password"));
+        a.setStatus(rs.getInt("status"));
+        output.add(a);
+      }
+      model.put("records",output);
+       return "adminmanage";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
 
   @PostMapping("/registeruser")
