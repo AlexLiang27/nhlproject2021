@@ -182,6 +182,19 @@ public class Main {
     return "standings";
   }
 
+   @GetMapping("/adminaccess")
+  String goAdminaccess(HttpServletRequest request) {
+    boolean temp = security(request);
+    if (temp == false)
+      return "redirect:/login";
+  // try (Connection connection = dataSource.getConnection()) {
+  //   Statement stmt  = connection.createStatement();
+  //     ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+  //     if ()
+  // }
+    return "adminaccess";
+  }
+
   @PostMapping("/registeruser")
   public String userRegister(Map<String, Object> model, User user) {
     try (Connection connection = dataSource.getConnection()) {
