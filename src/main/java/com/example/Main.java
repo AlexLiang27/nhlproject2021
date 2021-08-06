@@ -108,8 +108,9 @@ public class Main {
       while (rs.next()) {
         if (IDCheck == rs.getInt("ID")) {
           if (rs.getInt("status") == 0) {
+            model.put("user", rs.getString("username"));
             //if you are NOT an admin, go here
-            return "redirect:/home";
+            return "home";
           }
         }
       }
@@ -122,12 +123,29 @@ public class Main {
   }
 
   @GetMapping("/home")
-  String goHome(HttpServletRequest request) {
+  String goHome(Map<String, Object> model, HttpServletRequest request) {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
-
-    return "home";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+          model.put("user", rs.getString("username"));
+          if (rs.getInt("status") == 0) {
+            //if you are NOT an admin, go here
+            return "home";
+          }
+        }
+      }
+      return "adminhome";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
 
   @GetMapping("/favouritethisplayer")
@@ -317,8 +335,22 @@ public class Main {
     boolean temp = security(request);
     if (temp == false)
       return "redirect:/login";
-    
-    return "profile";
+    ArrayList<Integer> sessionID = (ArrayList<Integer>) request.getSession().getAttribute("MY_SESSION_ID");
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt  = connection.createStatement();
+      ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+      int IDCheck = sessionID.get(0);
+      while (rs.next()) {
+        if (IDCheck == rs.getInt("ID")) {
+            model.put("user", rs.getString("username"));
+            return "profile";
+          }
+        }
+      return "profile";
+  } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
   }
 
 
